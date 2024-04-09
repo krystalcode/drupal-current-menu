@@ -63,11 +63,18 @@ class CurrentMenuCondition extends ConditionPluginBase implements ContainerFacto
     $menus = array_map(function (MenuInterface $menu) {
       return $menu->label();
     }, $this->menuStorage->loadMultiple());
+    $system_menu_list = [
+      'tools' => 'Tools',
+      'admin' => 'Administration',
+      'account' => 'User account menu',
+      'main' => 'Main navigation',
+      'footer' => 'Footer menu',
+    ];
     $form['menu'] = [
       '#type' => 'select',
       '#title' => $this->t('Menu'),
       '#default_value' => $this->configuration['menu'],
-      '#options' => array_diff_key($menus, menu_list_system_menus()),
+      '#options' => array_diff_key($menus, $system_menu_list),
       '#empty_option' => t('None'),
     ];
     return parent::buildConfigurationForm($form, $form_state);
